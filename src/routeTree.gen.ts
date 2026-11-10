@@ -10,33 +10,477 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AlugarRouteImport } from './routes/alugar'
+import { Route as AnaliseInvestimentoRouteImport } from './routes/analise-investimento'
+import { Route as AnunciarRouteImport } from './routes/anunciar'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ComprarRouteImport } from './routes/comprar'
+import { Route as ContatoRouteImport } from './routes/contato'
+import { Route as CorretoresRouteImport } from './routes/corretores'
+import { Route as ImoveisRouteImport } from './routes/imoveis'
+import { Route as InvestirRouteImport } from './routes/investir'
+import { Route as PrivacidadeRouteImport } from './routes/privacidade'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as SimuladorRouteImport } from './routes/simulador'
+import { Route as ValorizacaoRouteImport } from './routes/valorizacao'
+import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
+import { Route as AuthenticatedContaRouteRouteImport } from './routes/_authenticated/conta/route'
+import { Route as AuthenticatedPainelRouteRouteImport } from './routes/_authenticated/painel/route'
+import { Route as ImovelSlugRouteImport } from './routes/imovel.$slug'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
+import { Route as AuthenticatedAdminBannersRouteImport } from './routes/_authenticated/admin/banners'
+import { Route as AuthenticatedAdminCategoriasRouteImport } from './routes/_authenticated/admin/categorias'
+import { Route as AuthenticatedAdminImoveisRouteImport } from './routes/_authenticated/admin/imoveis'
+import { Route as AuthenticatedAdminUsuariosRouteImport } from './routes/_authenticated/admin/usuarios'
+import { Route as AuthenticatedContaIndexRouteImport } from './routes/_authenticated/conta/index'
+import { Route as AuthenticatedContaFavoritosRouteImport } from './routes/_authenticated/conta/favoritos'
+import { Route as AuthenticatedContaNotificacoesRouteImport } from './routes/_authenticated/conta/notificacoes'
+import { Route as AuthenticatedContaPrivacidadeRouteImport } from './routes/_authenticated/conta/privacidade'
+import { Route as AuthenticatedContaPropostasRouteImport } from './routes/_authenticated/conta/propostas'
+import { Route as AuthenticatedPainelIndexRouteImport } from './routes/_authenticated/painel/index'
+import { Route as AuthenticatedPainelImoveisRouteImport } from './routes/_authenticated/painel/imoveis'
+import { Route as AuthenticatedPainelLeadsRouteImport } from './routes/_authenticated/painel/leads'
+import { Route as AuthenticatedPainelPropostasRouteImport } from './routes/_authenticated/painel/propostas'
+import { Route as AuthenticatedPainelRelatoriosRouteImport } from './routes/_authenticated/painel/relatorios'
+import { Route as AuthenticatedPainelImoveisIdRouteImport } from './routes/_authenticated/painel/imoveis.$id'
+import { Route as AuthenticatedPainelImoveisNovoRouteImport } from './routes/_authenticated/painel/imoveis.novo'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AlugarRoute = AlugarRouteImport.update({
+  id: '/alugar',
+  path: '/alugar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnaliseInvestimentoRoute = AnaliseInvestimentoRouteImport.update({
+  id: '/analise-investimento',
+  path: '/analise-investimento',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnunciarRoute = AnunciarRouteImport.update({
+  id: '/anunciar',
+  path: '/anunciar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComprarRoute = ComprarRouteImport.update({
+  id: '/comprar',
+  path: '/comprar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContatoRoute = ContatoRouteImport.update({
+  id: '/contato',
+  path: '/contato',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CorretoresRoute = CorretoresRouteImport.update({
+  id: '/corretores',
+  path: '/corretores',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImoveisRoute = ImoveisRouteImport.update({
+  id: '/imoveis',
+  path: '/imoveis',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InvestirRoute = InvestirRouteImport.update({
+  id: '/investir',
+  path: '/investir',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacidadeRoute = PrivacidadeRouteImport.update({
+  id: '/privacidade',
+  path: '/privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SimuladorRoute = SimuladorRouteImport.update({
+  id: '/simulador',
+  path: '/simulador',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ValorizacaoRoute = ValorizacaoRouteImport.update({
+  id: '/valorizacao',
+  path: '/valorizacao',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminRouteRoute = AuthenticatedAdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedContaRouteRoute = AuthenticatedContaRouteRouteImport.update({
+  id: '/conta',
+  path: '/conta',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPainelRouteRoute =
+  AuthenticatedPainelRouteRouteImport.update({
+    id: '/painel',
+    path: '/painel',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const ImovelSlugRoute = ImovelSlugRouteImport.update({
+  id: '/imovel/$slug',
+  path: '/imovel/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
+} as any)
+const AuthenticatedAdminBannersRoute =
+  AuthenticatedAdminBannersRouteImport.update({
+    id: '/banners',
+    path: '/banners',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminCategoriasRoute =
+  AuthenticatedAdminCategoriasRouteImport.update({
+    id: '/categorias',
+    path: '/categorias',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminImoveisRoute =
+  AuthenticatedAdminImoveisRouteImport.update({
+    id: '/imoveis',
+    path: '/imoveis',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminUsuariosRoute =
+  AuthenticatedAdminUsuariosRouteImport.update({
+    id: '/usuarios',
+    path: '/usuarios',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedContaIndexRoute = AuthenticatedContaIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedContaRouteRoute,
+} as any)
+const AuthenticatedContaFavoritosRoute =
+  AuthenticatedContaFavoritosRouteImport.update({
+    id: '/favoritos',
+    path: '/favoritos',
+    getParentRoute: () => AuthenticatedContaRouteRoute,
+  } as any)
+const AuthenticatedContaNotificacoesRoute =
+  AuthenticatedContaNotificacoesRouteImport.update({
+    id: '/notificacoes',
+    path: '/notificacoes',
+    getParentRoute: () => AuthenticatedContaRouteRoute,
+  } as any)
+const AuthenticatedContaPrivacidadeRoute =
+  AuthenticatedContaPrivacidadeRouteImport.update({
+    id: '/privacidade',
+    path: '/privacidade',
+    getParentRoute: () => AuthenticatedContaRouteRoute,
+  } as any)
+const AuthenticatedContaPropostasRoute =
+  AuthenticatedContaPropostasRouteImport.update({
+    id: '/propostas',
+    path: '/propostas',
+    getParentRoute: () => AuthenticatedContaRouteRoute,
+  } as any)
+const AuthenticatedPainelIndexRoute =
+  AuthenticatedPainelIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedPainelRouteRoute,
+  } as any)
+const AuthenticatedPainelImoveisRoute =
+  AuthenticatedPainelImoveisRouteImport.update({
+    id: '/imoveis',
+    path: '/imoveis',
+    getParentRoute: () => AuthenticatedPainelRouteRoute,
+  } as any)
+const AuthenticatedPainelLeadsRoute =
+  AuthenticatedPainelLeadsRouteImport.update({
+    id: '/leads',
+    path: '/leads',
+    getParentRoute: () => AuthenticatedPainelRouteRoute,
+  } as any)
+const AuthenticatedPainelPropostasRoute =
+  AuthenticatedPainelPropostasRouteImport.update({
+    id: '/propostas',
+    path: '/propostas',
+    getParentRoute: () => AuthenticatedPainelRouteRoute,
+  } as any)
+const AuthenticatedPainelRelatoriosRoute =
+  AuthenticatedPainelRelatoriosRouteImport.update({
+    id: '/relatorios',
+    path: '/relatorios',
+    getParentRoute: () => AuthenticatedPainelRouteRoute,
+  } as any)
+const AuthenticatedPainelImoveisIdRoute =
+  AuthenticatedPainelImoveisIdRouteImport.update({
+    id: '/$id',
+    path: '/$id',
+    getParentRoute: () => AuthenticatedPainelImoveisRoute,
+  } as any)
+const AuthenticatedPainelImoveisNovoRoute =
+  AuthenticatedPainelImoveisNovoRouteImport.update({
+    id: '/novo',
+    path: '/novo',
+    getParentRoute: () => AuthenticatedPainelImoveisRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/alugar': typeof AlugarRoute
+  '/analise-investimento': typeof AnaliseInvestimentoRoute
+  '/anunciar': typeof AnunciarRoute
+  '/auth': typeof AuthRoute
+  '/comprar': typeof ComprarRoute
+  '/contato': typeof ContatoRoute
+  '/corretores': typeof CorretoresRoute
+  '/imoveis': typeof ImoveisRoute
+  '/investir': typeof InvestirRoute
+  '/privacidade': typeof PrivacidadeRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/simulador': typeof SimuladorRoute
+  '/valorizacao': typeof ValorizacaoRoute
+  '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
+  '/conta': typeof AuthenticatedContaRouteRouteWithChildren
+  '/painel': typeof AuthenticatedPainelRouteRouteWithChildren
+  '/imovel/$slug': typeof ImovelSlugRoute
+  '/admin/banners': typeof AuthenticatedAdminBannersRoute
+  '/admin/categorias': typeof AuthenticatedAdminCategoriasRoute
+  '/admin/imoveis': typeof AuthenticatedAdminImoveisRoute
+  '/admin/usuarios': typeof AuthenticatedAdminUsuariosRoute
+  '/conta/favoritos': typeof AuthenticatedContaFavoritosRoute
+  '/conta/notificacoes': typeof AuthenticatedContaNotificacoesRoute
+  '/conta/privacidade': typeof AuthenticatedContaPrivacidadeRoute
+  '/conta/propostas': typeof AuthenticatedContaPropostasRoute
+  '/painel/imoveis': typeof AuthenticatedPainelImoveisRouteWithChildren
+  '/painel/leads': typeof AuthenticatedPainelLeadsRoute
+  '/painel/propostas': typeof AuthenticatedPainelPropostasRoute
+  '/painel/relatorios': typeof AuthenticatedPainelRelatoriosRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/conta/': typeof AuthenticatedContaIndexRoute
+  '/painel/': typeof AuthenticatedPainelIndexRoute
+  '/painel/imoveis/$id': typeof AuthenticatedPainelImoveisIdRoute
+  '/painel/imoveis/novo': typeof AuthenticatedPainelImoveisNovoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/alugar': typeof AlugarRoute
+  '/analise-investimento': typeof AnaliseInvestimentoRoute
+  '/anunciar': typeof AnunciarRoute
+  '/auth': typeof AuthRoute
+  '/comprar': typeof ComprarRoute
+  '/contato': typeof ContatoRoute
+  '/corretores': typeof CorretoresRoute
+  '/imoveis': typeof ImoveisRoute
+  '/investir': typeof InvestirRoute
+  '/privacidade': typeof PrivacidadeRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/simulador': typeof SimuladorRoute
+  '/valorizacao': typeof ValorizacaoRoute
+  '/imovel/$slug': typeof ImovelSlugRoute
+  '/admin/banners': typeof AuthenticatedAdminBannersRoute
+  '/admin/categorias': typeof AuthenticatedAdminCategoriasRoute
+  '/admin/imoveis': typeof AuthenticatedAdminImoveisRoute
+  '/admin/usuarios': typeof AuthenticatedAdminUsuariosRoute
+  '/conta/favoritos': typeof AuthenticatedContaFavoritosRoute
+  '/conta/notificacoes': typeof AuthenticatedContaNotificacoesRoute
+  '/conta/privacidade': typeof AuthenticatedContaPrivacidadeRoute
+  '/conta/propostas': typeof AuthenticatedContaPropostasRoute
+  '/painel/imoveis': typeof AuthenticatedPainelImoveisRouteWithChildren
+  '/painel/leads': typeof AuthenticatedPainelLeadsRoute
+  '/painel/propostas': typeof AuthenticatedPainelPropostasRoute
+  '/painel/relatorios': typeof AuthenticatedPainelRelatoriosRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
+  '/conta': typeof AuthenticatedContaIndexRoute
+  '/painel': typeof AuthenticatedPainelIndexRoute
+  '/painel/imoveis/$id': typeof AuthenticatedPainelImoveisIdRoute
+  '/painel/imoveis/novo': typeof AuthenticatedPainelImoveisNovoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/alugar': typeof AlugarRoute
+  '/analise-investimento': typeof AnaliseInvestimentoRoute
+  '/anunciar': typeof AnunciarRoute
+  '/auth': typeof AuthRoute
+  '/comprar': typeof ComprarRoute
+  '/contato': typeof ContatoRoute
+  '/corretores': typeof CorretoresRoute
+  '/imoveis': typeof ImoveisRoute
+  '/investir': typeof InvestirRoute
+  '/privacidade': typeof PrivacidadeRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/simulador': typeof SimuladorRoute
+  '/valorizacao': typeof ValorizacaoRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
+  '/_authenticated/conta': typeof AuthenticatedContaRouteRouteWithChildren
+  '/_authenticated/painel': typeof AuthenticatedPainelRouteRouteWithChildren
+  '/imovel/$slug': typeof ImovelSlugRoute
+  '/_authenticated/admin/banners': typeof AuthenticatedAdminBannersRoute
+  '/_authenticated/admin/categorias': typeof AuthenticatedAdminCategoriasRoute
+  '/_authenticated/admin/imoveis': typeof AuthenticatedAdminImoveisRoute
+  '/_authenticated/admin/usuarios': typeof AuthenticatedAdminUsuariosRoute
+  '/_authenticated/conta/favoritos': typeof AuthenticatedContaFavoritosRoute
+  '/_authenticated/conta/notificacoes': typeof AuthenticatedContaNotificacoesRoute
+  '/_authenticated/conta/privacidade': typeof AuthenticatedContaPrivacidadeRoute
+  '/_authenticated/conta/propostas': typeof AuthenticatedContaPropostasRoute
+  '/_authenticated/painel/imoveis': typeof AuthenticatedPainelImoveisRouteWithChildren
+  '/_authenticated/painel/leads': typeof AuthenticatedPainelLeadsRoute
+  '/_authenticated/painel/propostas': typeof AuthenticatedPainelPropostasRoute
+  '/_authenticated/painel/relatorios': typeof AuthenticatedPainelRelatoriosRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/conta/': typeof AuthenticatedContaIndexRoute
+  '/_authenticated/painel/': typeof AuthenticatedPainelIndexRoute
+  '/_authenticated/painel/imoveis/$id': typeof AuthenticatedPainelImoveisIdRoute
+  '/_authenticated/painel/imoveis/novo': typeof AuthenticatedPainelImoveisNovoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/alugar'
+    | '/analise-investimento'
+    | '/anunciar'
+    | '/auth'
+    | '/comprar'
+    | '/contato'
+    | '/corretores'
+    | '/imoveis'
+    | '/investir'
+    | '/privacidade'
+    | '/reset-password'
+    | '/simulador'
+    | '/valorizacao'
+    | '/admin'
+    | '/conta'
+    | '/painel'
+    | '/imovel/$slug'
+    | '/admin/banners'
+    | '/admin/categorias'
+    | '/admin/imoveis'
+    | '/admin/usuarios'
+    | '/conta/favoritos'
+    | '/conta/notificacoes'
+    | '/conta/privacidade'
+    | '/conta/propostas'
+    | '/painel/imoveis'
+    | '/painel/leads'
+    | '/painel/propostas'
+    | '/painel/relatorios'
+    | '/admin/'
+    | '/conta/'
+    | '/painel/'
+    | '/painel/imoveis/$id'
+    | '/painel/imoveis/novo'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/alugar'
+    | '/analise-investimento'
+    | '/anunciar'
+    | '/auth'
+    | '/comprar'
+    | '/contato'
+    | '/corretores'
+    | '/imoveis'
+    | '/investir'
+    | '/privacidade'
+    | '/reset-password'
+    | '/simulador'
+    | '/valorizacao'
+    | '/imovel/$slug'
+    | '/admin/banners'
+    | '/admin/categorias'
+    | '/admin/imoveis'
+    | '/admin/usuarios'
+    | '/conta/favoritos'
+    | '/conta/notificacoes'
+    | '/conta/privacidade'
+    | '/conta/propostas'
+    | '/painel/imoveis'
+    | '/painel/leads'
+    | '/painel/propostas'
+    | '/painel/relatorios'
+    | '/admin'
+    | '/conta'
+    | '/painel'
+    | '/painel/imoveis/$id'
+    | '/painel/imoveis/novo'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/alugar'
+    | '/analise-investimento'
+    | '/anunciar'
+    | '/auth'
+    | '/comprar'
+    | '/contato'
+    | '/corretores'
+    | '/imoveis'
+    | '/investir'
+    | '/privacidade'
+    | '/reset-password'
+    | '/simulador'
+    | '/valorizacao'
+    | '/_authenticated/admin'
+    | '/_authenticated/conta'
+    | '/_authenticated/painel'
+    | '/imovel/$slug'
+    | '/_authenticated/admin/banners'
+    | '/_authenticated/admin/categorias'
+    | '/_authenticated/admin/imoveis'
+    | '/_authenticated/admin/usuarios'
+    | '/_authenticated/conta/favoritos'
+    | '/_authenticated/conta/notificacoes'
+    | '/_authenticated/conta/privacidade'
+    | '/_authenticated/conta/propostas'
+    | '/_authenticated/painel/imoveis'
+    | '/_authenticated/painel/leads'
+    | '/_authenticated/painel/propostas'
+    | '/_authenticated/painel/relatorios'
+    | '/_authenticated/admin/'
+    | '/_authenticated/conta/'
+    | '/_authenticated/painel/'
+    | '/_authenticated/painel/imoveis/$id'
+    | '/_authenticated/painel/imoveis/novo'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AlugarRoute: typeof AlugarRoute
+  AnaliseInvestimentoRoute: typeof AnaliseInvestimentoRoute
+  AnunciarRoute: typeof AnunciarRoute
+  AuthRoute: typeof AuthRoute
+  ComprarRoute: typeof ComprarRoute
+  ContatoRoute: typeof ContatoRoute
+  CorretoresRoute: typeof CorretoresRoute
+  ImoveisRoute: typeof ImoveisRoute
+  InvestirRoute: typeof InvestirRoute
+  PrivacidadeRoute: typeof PrivacidadeRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
+  SimuladorRoute: typeof SimuladorRoute
+  ValorizacaoRoute: typeof ValorizacaoRoute
+  ImovelSlugRoute: typeof ImovelSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +492,369 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/alugar': {
+      id: '/alugar'
+      path: '/alugar'
+      fullPath: '/alugar'
+      preLoaderRoute: typeof AlugarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/analise-investimento': {
+      id: '/analise-investimento'
+      path: '/analise-investimento'
+      fullPath: '/analise-investimento'
+      preLoaderRoute: typeof AnaliseInvestimentoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/anunciar': {
+      id: '/anunciar'
+      path: '/anunciar'
+      fullPath: '/anunciar'
+      preLoaderRoute: typeof AnunciarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comprar': {
+      id: '/comprar'
+      path: '/comprar'
+      fullPath: '/comprar'
+      preLoaderRoute: typeof ComprarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contato': {
+      id: '/contato'
+      path: '/contato'
+      fullPath: '/contato'
+      preLoaderRoute: typeof ContatoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/corretores': {
+      id: '/corretores'
+      path: '/corretores'
+      fullPath: '/corretores'
+      preLoaderRoute: typeof CorretoresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/imoveis': {
+      id: '/imoveis'
+      path: '/imoveis'
+      fullPath: '/imoveis'
+      preLoaderRoute: typeof ImoveisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/investir': {
+      id: '/investir'
+      path: '/investir'
+      fullPath: '/investir'
+      preLoaderRoute: typeof InvestirRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacidade': {
+      id: '/privacidade'
+      path: '/privacidade'
+      fullPath: '/privacidade'
+      preLoaderRoute: typeof PrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/simulador': {
+      id: '/simulador'
+      path: '/simulador'
+      fullPath: '/simulador'
+      preLoaderRoute: typeof SimuladorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/valorizacao': {
+      id: '/valorizacao'
+      path: '/valorizacao'
+      fullPath: '/valorizacao'
+      preLoaderRoute: typeof ValorizacaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/conta': {
+      id: '/_authenticated/conta'
+      path: '/conta'
+      fullPath: '/conta'
+      preLoaderRoute: typeof AuthenticatedContaRouteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/painel': {
+      id: '/_authenticated/painel'
+      path: '/painel'
+      fullPath: '/painel'
+      preLoaderRoute: typeof AuthenticatedPainelRouteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/imovel/$slug': {
+      id: '/imovel/$slug'
+      path: '/imovel/$slug'
+      fullPath: '/imovel/$slug'
+      preLoaderRoute: typeof ImovelSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/banners': {
+      id: '/_authenticated/admin/banners'
+      path: '/banners'
+      fullPath: '/admin/banners'
+      preLoaderRoute: typeof AuthenticatedAdminBannersRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/categorias': {
+      id: '/_authenticated/admin/categorias'
+      path: '/categorias'
+      fullPath: '/admin/categorias'
+      preLoaderRoute: typeof AuthenticatedAdminCategoriasRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/imoveis': {
+      id: '/_authenticated/admin/imoveis'
+      path: '/imoveis'
+      fullPath: '/admin/imoveis'
+      preLoaderRoute: typeof AuthenticatedAdminImoveisRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/usuarios': {
+      id: '/_authenticated/admin/usuarios'
+      path: '/usuarios'
+      fullPath: '/admin/usuarios'
+      preLoaderRoute: typeof AuthenticatedAdminUsuariosRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/conta/': {
+      id: '/_authenticated/conta/'
+      path: '/'
+      fullPath: '/conta/'
+      preLoaderRoute: typeof AuthenticatedContaIndexRouteImport
+      parentRoute: typeof AuthenticatedContaRouteRoute
+    }
+    '/_authenticated/conta/favoritos': {
+      id: '/_authenticated/conta/favoritos'
+      path: '/favoritos'
+      fullPath: '/conta/favoritos'
+      preLoaderRoute: typeof AuthenticatedContaFavoritosRouteImport
+      parentRoute: typeof AuthenticatedContaRouteRoute
+    }
+    '/_authenticated/conta/notificacoes': {
+      id: '/_authenticated/conta/notificacoes'
+      path: '/notificacoes'
+      fullPath: '/conta/notificacoes'
+      preLoaderRoute: typeof AuthenticatedContaNotificacoesRouteImport
+      parentRoute: typeof AuthenticatedContaRouteRoute
+    }
+    '/_authenticated/conta/privacidade': {
+      id: '/_authenticated/conta/privacidade'
+      path: '/privacidade'
+      fullPath: '/conta/privacidade'
+      preLoaderRoute: typeof AuthenticatedContaPrivacidadeRouteImport
+      parentRoute: typeof AuthenticatedContaRouteRoute
+    }
+    '/_authenticated/conta/propostas': {
+      id: '/_authenticated/conta/propostas'
+      path: '/propostas'
+      fullPath: '/conta/propostas'
+      preLoaderRoute: typeof AuthenticatedContaPropostasRouteImport
+      parentRoute: typeof AuthenticatedContaRouteRoute
+    }
+    '/_authenticated/painel/': {
+      id: '/_authenticated/painel/'
+      path: '/'
+      fullPath: '/painel/'
+      preLoaderRoute: typeof AuthenticatedPainelIndexRouteImport
+      parentRoute: typeof AuthenticatedPainelRouteRoute
+    }
+    '/_authenticated/painel/imoveis': {
+      id: '/_authenticated/painel/imoveis'
+      path: '/imoveis'
+      fullPath: '/painel/imoveis'
+      preLoaderRoute: typeof AuthenticatedPainelImoveisRouteImport
+      parentRoute: typeof AuthenticatedPainelRouteRoute
+    }
+    '/_authenticated/painel/leads': {
+      id: '/_authenticated/painel/leads'
+      path: '/leads'
+      fullPath: '/painel/leads'
+      preLoaderRoute: typeof AuthenticatedPainelLeadsRouteImport
+      parentRoute: typeof AuthenticatedPainelRouteRoute
+    }
+    '/_authenticated/painel/propostas': {
+      id: '/_authenticated/painel/propostas'
+      path: '/propostas'
+      fullPath: '/painel/propostas'
+      preLoaderRoute: typeof AuthenticatedPainelPropostasRouteImport
+      parentRoute: typeof AuthenticatedPainelRouteRoute
+    }
+    '/_authenticated/painel/relatorios': {
+      id: '/_authenticated/painel/relatorios'
+      path: '/relatorios'
+      fullPath: '/painel/relatorios'
+      preLoaderRoute: typeof AuthenticatedPainelRelatoriosRouteImport
+      parentRoute: typeof AuthenticatedPainelRouteRoute
+    }
+    '/_authenticated/painel/imoveis/$id': {
+      id: '/_authenticated/painel/imoveis/$id'
+      path: '/$id'
+      fullPath: '/painel/imoveis/$id'
+      preLoaderRoute: typeof AuthenticatedPainelImoveisIdRouteImport
+      parentRoute: typeof AuthenticatedPainelImoveisRoute
+    }
+    '/_authenticated/painel/imoveis/novo': {
+      id: '/_authenticated/painel/imoveis/novo'
+      path: '/novo'
+      fullPath: '/painel/imoveis/novo'
+      preLoaderRoute: typeof AuthenticatedPainelImoveisNovoRouteImport
+      parentRoute: typeof AuthenticatedPainelImoveisRoute
+    }
   }
 }
 
+interface AuthenticatedAdminRouteRouteChildren {
+  AuthenticatedAdminBannersRoute: typeof AuthenticatedAdminBannersRoute
+  AuthenticatedAdminCategoriasRoute: typeof AuthenticatedAdminCategoriasRoute
+  AuthenticatedAdminImoveisRoute: typeof AuthenticatedAdminImoveisRoute
+  AuthenticatedAdminUsuariosRoute: typeof AuthenticatedAdminUsuariosRoute
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+}
+
+const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren =
+  {
+    AuthenticatedAdminBannersRoute: AuthenticatedAdminBannersRoute,
+    AuthenticatedAdminCategoriasRoute: AuthenticatedAdminCategoriasRoute,
+    AuthenticatedAdminImoveisRoute: AuthenticatedAdminImoveisRoute,
+    AuthenticatedAdminUsuariosRoute: AuthenticatedAdminUsuariosRoute,
+    AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  }
+
+const AuthenticatedAdminRouteRouteWithChildren =
+  AuthenticatedAdminRouteRoute._addFileChildren(
+    AuthenticatedAdminRouteRouteChildren,
+  )
+
+interface AuthenticatedContaRouteRouteChildren {
+  AuthenticatedContaFavoritosRoute: typeof AuthenticatedContaFavoritosRoute
+  AuthenticatedContaNotificacoesRoute: typeof AuthenticatedContaNotificacoesRoute
+  AuthenticatedContaPrivacidadeRoute: typeof AuthenticatedContaPrivacidadeRoute
+  AuthenticatedContaPropostasRoute: typeof AuthenticatedContaPropostasRoute
+  AuthenticatedContaIndexRoute: typeof AuthenticatedContaIndexRoute
+}
+
+const AuthenticatedContaRouteRouteChildren: AuthenticatedContaRouteRouteChildren =
+  {
+    AuthenticatedContaFavoritosRoute: AuthenticatedContaFavoritosRoute,
+    AuthenticatedContaNotificacoesRoute: AuthenticatedContaNotificacoesRoute,
+    AuthenticatedContaPrivacidadeRoute: AuthenticatedContaPrivacidadeRoute,
+    AuthenticatedContaPropostasRoute: AuthenticatedContaPropostasRoute,
+    AuthenticatedContaIndexRoute: AuthenticatedContaIndexRoute,
+  }
+
+const AuthenticatedContaRouteRouteWithChildren =
+  AuthenticatedContaRouteRoute._addFileChildren(
+    AuthenticatedContaRouteRouteChildren,
+  )
+
+interface AuthenticatedPainelImoveisRouteChildren {
+  AuthenticatedPainelImoveisIdRoute: typeof AuthenticatedPainelImoveisIdRoute
+  AuthenticatedPainelImoveisNovoRoute: typeof AuthenticatedPainelImoveisNovoRoute
+}
+
+const AuthenticatedPainelImoveisRouteChildren: AuthenticatedPainelImoveisRouteChildren =
+  {
+    AuthenticatedPainelImoveisIdRoute: AuthenticatedPainelImoveisIdRoute,
+    AuthenticatedPainelImoveisNovoRoute: AuthenticatedPainelImoveisNovoRoute,
+  }
+
+const AuthenticatedPainelImoveisRouteWithChildren =
+  AuthenticatedPainelImoveisRoute._addFileChildren(
+    AuthenticatedPainelImoveisRouteChildren,
+  )
+
+interface AuthenticatedPainelRouteRouteChildren {
+  AuthenticatedPainelImoveisRoute: typeof AuthenticatedPainelImoveisRouteWithChildren
+  AuthenticatedPainelLeadsRoute: typeof AuthenticatedPainelLeadsRoute
+  AuthenticatedPainelPropostasRoute: typeof AuthenticatedPainelPropostasRoute
+  AuthenticatedPainelRelatoriosRoute: typeof AuthenticatedPainelRelatoriosRoute
+  AuthenticatedPainelIndexRoute: typeof AuthenticatedPainelIndexRoute
+}
+
+const AuthenticatedPainelRouteRouteChildren: AuthenticatedPainelRouteRouteChildren =
+  {
+    AuthenticatedPainelImoveisRoute:
+      AuthenticatedPainelImoveisRouteWithChildren,
+    AuthenticatedPainelLeadsRoute: AuthenticatedPainelLeadsRoute,
+    AuthenticatedPainelPropostasRoute: AuthenticatedPainelPropostasRoute,
+    AuthenticatedPainelRelatoriosRoute: AuthenticatedPainelRelatoriosRoute,
+    AuthenticatedPainelIndexRoute: AuthenticatedPainelIndexRoute,
+  }
+
+const AuthenticatedPainelRouteRouteWithChildren =
+  AuthenticatedPainelRouteRoute._addFileChildren(
+    AuthenticatedPainelRouteRouteChildren,
+  )
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRouteRoute: typeof AuthenticatedAdminRouteRouteWithChildren
+  AuthenticatedContaRouteRoute: typeof AuthenticatedContaRouteRouteWithChildren
+  AuthenticatedPainelRouteRoute: typeof AuthenticatedPainelRouteRouteWithChildren
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRouteRoute: AuthenticatedAdminRouteRouteWithChildren,
+  AuthenticatedContaRouteRoute: AuthenticatedContaRouteRouteWithChildren,
+  AuthenticatedPainelRouteRoute: AuthenticatedPainelRouteRouteWithChildren,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AlugarRoute: AlugarRoute,
+  AnaliseInvestimentoRoute: AnaliseInvestimentoRoute,
+  AnunciarRoute: AnunciarRoute,
+  AuthRoute: AuthRoute,
+  ComprarRoute: ComprarRoute,
+  ContatoRoute: ContatoRoute,
+  CorretoresRoute: CorretoresRoute,
+  ImoveisRoute: ImoveisRoute,
+  InvestirRoute: InvestirRoute,
+  PrivacidadeRoute: PrivacidadeRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
+  SimuladorRoute: SimuladorRoute,
+  ValorizacaoRoute: ValorizacaoRoute,
+  ImovelSlugRoute: ImovelSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

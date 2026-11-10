@@ -8,6 +8,7 @@
 - [x] Finance engine (SAC/PRICE, valuation, investment) with tests
 
 ## Open (next turn)
+- [ ] Move `wip/` (header, footer, menu, auth hook, protected layout) back into `src/` together with the pages they link to
 - [ ] Root wiring (fonts, AuthProvider, Toaster, titles) + home page at /
 - [ ] /auth (login, signup with LGPD consent, password reset), /reset-password
 - [ ] Public: /imoveis, /comprar, /alugar, /imovel/$slug, /anunciar, /investir, /simulador, /valorizacao, /analise-investimento, /contato, /corretores, /privacidade

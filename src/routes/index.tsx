@@ -14,7 +14,7 @@ import { PropertySearch } from "@/components/site/PropertySearch";
 import { BrokerCarousel, TestimonialCarousel } from "@/components/site/BrokerCarousel";
 import { Button } from "@/components/ui/button";
 import { getHomeData } from "@/lib/public.functions";
-import { MOCK_BROKERS, MOCK_TESTIMONIALS } from "@/lib/mock-data";
+import { MOCK_BROKERS, MOCK_PARTNERS, MOCK_TESTIMONIALS } from "@/lib/mock-data";
 import { SITE } from "@/lib/config";
 
 export const Route = createFileRoute("/")({
@@ -32,7 +32,7 @@ const PILLARS = [
   { icon: Home, title: "Comprar e Alugar", desc: "Busca completa com filtros e detalhes reais.", to: "/imoveis" as const },
   { icon: Handshake, title: "Anunciar Imóvel", desc: "Publique com fotos, vídeos e aprovação.", to: "/anunciar" as const },
   { icon: BarChart3, title: "Investir", desc: "Simuladores e análise de rentabilidade.", to: "/investir" as const },
-  { icon: Users, title: "Parcerias", desc: "Corretores, imobiliárias e rede comercial.", to: "/corretores" as const },
+  { icon: Users, title: "Parcerias", desc: "Corretores, imobiliárias e rede comercial.", to: "/parceiros" as const },
 ];
 
 function HomePage() {
@@ -184,21 +184,24 @@ function HomePage() {
         </div>
       </section>
 
-      {data.partners.length > 0 && (
-        <Section eyebrow="Parceiros" title="Rede de apoio ao negócio">
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {data.partners.map((p) => (
-              <div key={p.id} className="flex items-center gap-3 rounded-xl border bg-card px-4 py-3">
-                <Building2 className="h-5 w-5 text-gold" />
-                <div>
-                  <p className="text-sm font-semibold">{p.name}</p>
-                  {p.description && <p className="line-clamp-1 text-xs text-muted-foreground">{p.description}</p>}
-                </div>
+      <Section
+        eyebrow="Parceiros"
+        title="Rede de apoio ao negócio"
+        subtitle="Financiamento, seguro, jurídico e operação — parceiros demonstrativos."
+        action={<Button asChild variant="outline"><Link to="/parceiros">Ver parceiros</Link></Button>}
+      >
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {(data.partners.length ? data.partners : MOCK_PARTNERS).slice(0, 8).map((p) => (
+            <div key={p.id} className="flex items-center gap-3 rounded-xl border bg-card px-4 py-3">
+              <Building2 className="h-5 w-5 text-gold" />
+              <div>
+                <p className="text-sm font-semibold">{p.name}</p>
+                {p.description && <p className="line-clamp-1 text-xs text-muted-foreground">{p.description}</p>}
               </div>
-            ))}
-          </div>
-        </Section>
-      )}
+            </div>
+          ))}
+        </div>
+      </Section>
     </SiteShell>
   );
 }

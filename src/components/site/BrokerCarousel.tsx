@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { DemoBadge } from "@/components/site/StatusBadge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -33,7 +34,11 @@ function photoOf(b: BrokerSlide, index: number) {
 export function BrokerCard({ broker, index = 0, className }: { broker: BrokerSlide; index?: number; className?: string }) {
   const [src, setSrc] = useState(photoOf(broker, index));
   return (
-    <article className={cn("h-full rounded-2xl border bg-card p-5 shadow-soft", className)}>
+    <Link
+      to="/corretor/$id"
+      params={{ id: broker.id }}
+      className={cn("block h-full rounded-2xl border bg-card p-5 shadow-soft transition hover:-translate-y-0.5 hover:shadow-lift", className)}
+    >
       <div className="flex items-start justify-between gap-3">
         <Avatar className="h-16 w-16 border-2 border-gold">
           <AvatarImage src={src} alt={broker.display_name ?? "Corretor"} onError={() => setSrc(pickMockAvatar(index + 3))} />
@@ -59,7 +64,7 @@ export function BrokerCard({ broker, index = 0, className }: { broker: BrokerSli
           ))}
         </div>
       )}
-    </article>
+    </Link>
   );
 }
 

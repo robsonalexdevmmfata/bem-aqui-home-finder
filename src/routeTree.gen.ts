@@ -18,20 +18,26 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ComprarRouteImport } from './routes/comprar'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as CorretoresRouteImport } from './routes/corretores'
+import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ImoveisRouteImport } from './routes/imoveis'
 import { Route as InvestirRouteImport } from './routes/investir'
+import { Route as ParceirosRouteImport } from './routes/parceiros'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SimuladorRouteImport } from './routes/simulador'
+import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as TermosRouteImport } from './routes/termos'
 import { Route as ValorizacaoRouteImport } from './routes/valorizacao'
 import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
 import { Route as AuthenticatedContaRouteRouteImport } from './routes/_authenticated/conta/route'
 import { Route as AuthenticatedPainelRouteRouteImport } from './routes/_authenticated/painel/route'
+import { Route as CorretorIdRouteImport } from './routes/corretor.$id'
 import { Route as ImovelSlugRouteImport } from './routes/imovel.$slug'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
 import { Route as AuthenticatedAdminBannersRouteImport } from './routes/_authenticated/admin/banners'
 import { Route as AuthenticatedAdminCategoriasRouteImport } from './routes/_authenticated/admin/categorias'
 import { Route as AuthenticatedAdminImoveisRouteImport } from './routes/_authenticated/admin/imoveis'
+import { Route as AuthenticatedAdminParceirosRouteImport } from './routes/_authenticated/admin/parceiros'
 import { Route as AuthenticatedAdminUsuariosRouteImport } from './routes/_authenticated/admin/usuarios'
 import { Route as AuthenticatedContaIndexRouteImport } from './routes/_authenticated/conta/index'
 import { Route as AuthenticatedContaFavoritosRouteImport } from './routes/_authenticated/conta/favoritos'
@@ -90,6 +96,11 @@ const CorretoresRoute = CorretoresRouteImport.update({
   path: '/corretores',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ImoveisRoute = ImoveisRouteImport.update({
   id: '/imoveis',
   path: '/imoveis',
@@ -98,6 +109,11 @@ const ImoveisRoute = ImoveisRouteImport.update({
 const InvestirRoute = InvestirRouteImport.update({
   id: '/investir',
   path: '/investir',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ParceirosRoute = ParceirosRouteImport.update({
+  id: '/parceiros',
+  path: '/parceiros',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacidadeRoute = PrivacidadeRouteImport.update({
@@ -113,6 +129,16 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const SimuladorRoute = SimuladorRouteImport.update({
   id: '/simulador',
   path: '/simulador',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SobreRoute = SobreRouteImport.update({
+  id: '/sobre',
+  path: '/sobre',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermosRoute = TermosRouteImport.update({
+  id: '/termos',
+  path: '/termos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ValorizacaoRoute = ValorizacaoRouteImport.update({
@@ -136,6 +162,11 @@ const AuthenticatedPainelRouteRoute =
     path: '/painel',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const CorretorIdRoute = CorretorIdRouteImport.update({
+  id: '/corretor/$id',
+  path: '/corretor/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ImovelSlugRoute = ImovelSlugRouteImport.update({
   id: '/imovel/$slug',
   path: '/imovel/$slug',
@@ -162,6 +193,12 @@ const AuthenticatedAdminImoveisRoute =
   AuthenticatedAdminImoveisRouteImport.update({
     id: '/imoveis',
     path: '/imoveis',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminParceirosRoute =
+  AuthenticatedAdminParceirosRouteImport.update({
+    id: '/parceiros',
+    path: '/parceiros',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
 const AuthenticatedAdminUsuariosRoute =
@@ -251,19 +288,25 @@ export interface FileRoutesByFullPath {
   '/comprar': typeof ComprarRoute
   '/contato': typeof ContatoRoute
   '/corretores': typeof CorretoresRoute
+  '/faq': typeof FaqRoute
   '/imoveis': typeof ImoveisRoute
   '/investir': typeof InvestirRoute
+  '/parceiros': typeof ParceirosRoute
   '/privacidade': typeof PrivacidadeRoute
   '/reset-password': typeof ResetPasswordRoute
   '/simulador': typeof SimuladorRoute
+  '/sobre': typeof SobreRoute
+  '/termos': typeof TermosRoute
   '/valorizacao': typeof ValorizacaoRoute
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/conta': typeof AuthenticatedContaRouteRouteWithChildren
   '/painel': typeof AuthenticatedPainelRouteRouteWithChildren
+  '/corretor/$id': typeof CorretorIdRoute
   '/imovel/$slug': typeof ImovelSlugRoute
   '/admin/banners': typeof AuthenticatedAdminBannersRoute
   '/admin/categorias': typeof AuthenticatedAdminCategoriasRoute
   '/admin/imoveis': typeof AuthenticatedAdminImoveisRoute
+  '/admin/parceiros': typeof AuthenticatedAdminParceirosRoute
   '/admin/usuarios': typeof AuthenticatedAdminUsuariosRoute
   '/conta/favoritos': typeof AuthenticatedContaFavoritosRoute
   '/conta/notificacoes': typeof AuthenticatedContaNotificacoesRoute
@@ -288,16 +331,22 @@ export interface FileRoutesByTo {
   '/comprar': typeof ComprarRoute
   '/contato': typeof ContatoRoute
   '/corretores': typeof CorretoresRoute
+  '/faq': typeof FaqRoute
   '/imoveis': typeof ImoveisRoute
   '/investir': typeof InvestirRoute
+  '/parceiros': typeof ParceirosRoute
   '/privacidade': typeof PrivacidadeRoute
   '/reset-password': typeof ResetPasswordRoute
   '/simulador': typeof SimuladorRoute
+  '/sobre': typeof SobreRoute
+  '/termos': typeof TermosRoute
   '/valorizacao': typeof ValorizacaoRoute
+  '/corretor/$id': typeof CorretorIdRoute
   '/imovel/$slug': typeof ImovelSlugRoute
   '/admin/banners': typeof AuthenticatedAdminBannersRoute
   '/admin/categorias': typeof AuthenticatedAdminCategoriasRoute
   '/admin/imoveis': typeof AuthenticatedAdminImoveisRoute
+  '/admin/parceiros': typeof AuthenticatedAdminParceirosRoute
   '/admin/usuarios': typeof AuthenticatedAdminUsuariosRoute
   '/conta/favoritos': typeof AuthenticatedContaFavoritosRoute
   '/conta/notificacoes': typeof AuthenticatedContaNotificacoesRoute
@@ -324,19 +373,25 @@ export interface FileRoutesById {
   '/comprar': typeof ComprarRoute
   '/contato': typeof ContatoRoute
   '/corretores': typeof CorretoresRoute
+  '/faq': typeof FaqRoute
   '/imoveis': typeof ImoveisRoute
   '/investir': typeof InvestirRoute
+  '/parceiros': typeof ParceirosRoute
   '/privacidade': typeof PrivacidadeRoute
   '/reset-password': typeof ResetPasswordRoute
   '/simulador': typeof SimuladorRoute
+  '/sobre': typeof SobreRoute
+  '/termos': typeof TermosRoute
   '/valorizacao': typeof ValorizacaoRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/_authenticated/conta': typeof AuthenticatedContaRouteRouteWithChildren
   '/_authenticated/painel': typeof AuthenticatedPainelRouteRouteWithChildren
+  '/corretor/$id': typeof CorretorIdRoute
   '/imovel/$slug': typeof ImovelSlugRoute
   '/_authenticated/admin/banners': typeof AuthenticatedAdminBannersRoute
   '/_authenticated/admin/categorias': typeof AuthenticatedAdminCategoriasRoute
   '/_authenticated/admin/imoveis': typeof AuthenticatedAdminImoveisRoute
+  '/_authenticated/admin/parceiros': typeof AuthenticatedAdminParceirosRoute
   '/_authenticated/admin/usuarios': typeof AuthenticatedAdminUsuariosRoute
   '/_authenticated/conta/favoritos': typeof AuthenticatedContaFavoritosRoute
   '/_authenticated/conta/notificacoes': typeof AuthenticatedContaNotificacoesRoute
@@ -363,19 +418,25 @@ export interface FileRouteTypes {
     | '/comprar'
     | '/contato'
     | '/corretores'
+    | '/faq'
     | '/imoveis'
     | '/investir'
+    | '/parceiros'
     | '/privacidade'
     | '/reset-password'
     | '/simulador'
+    | '/sobre'
+    | '/termos'
     | '/valorizacao'
     | '/admin'
     | '/conta'
     | '/painel'
+    | '/corretor/$id'
     | '/imovel/$slug'
     | '/admin/banners'
     | '/admin/categorias'
     | '/admin/imoveis'
+    | '/admin/parceiros'
     | '/admin/usuarios'
     | '/conta/favoritos'
     | '/conta/notificacoes'
@@ -400,16 +461,22 @@ export interface FileRouteTypes {
     | '/comprar'
     | '/contato'
     | '/corretores'
+    | '/faq'
     | '/imoveis'
     | '/investir'
+    | '/parceiros'
     | '/privacidade'
     | '/reset-password'
     | '/simulador'
+    | '/sobre'
+    | '/termos'
     | '/valorizacao'
+    | '/corretor/$id'
     | '/imovel/$slug'
     | '/admin/banners'
     | '/admin/categorias'
     | '/admin/imoveis'
+    | '/admin/parceiros'
     | '/admin/usuarios'
     | '/conta/favoritos'
     | '/conta/notificacoes'
@@ -435,19 +502,25 @@ export interface FileRouteTypes {
     | '/comprar'
     | '/contato'
     | '/corretores'
+    | '/faq'
     | '/imoveis'
     | '/investir'
+    | '/parceiros'
     | '/privacidade'
     | '/reset-password'
     | '/simulador'
+    | '/sobre'
+    | '/termos'
     | '/valorizacao'
     | '/_authenticated/admin'
     | '/_authenticated/conta'
     | '/_authenticated/painel'
+    | '/corretor/$id'
     | '/imovel/$slug'
     | '/_authenticated/admin/banners'
     | '/_authenticated/admin/categorias'
     | '/_authenticated/admin/imoveis'
+    | '/_authenticated/admin/parceiros'
     | '/_authenticated/admin/usuarios'
     | '/_authenticated/conta/favoritos'
     | '/_authenticated/conta/notificacoes'
@@ -474,12 +547,17 @@ export interface RootRouteChildren {
   ComprarRoute: typeof ComprarRoute
   ContatoRoute: typeof ContatoRoute
   CorretoresRoute: typeof CorretoresRoute
+  FaqRoute: typeof FaqRoute
   ImoveisRoute: typeof ImoveisRoute
   InvestirRoute: typeof InvestirRoute
+  ParceirosRoute: typeof ParceirosRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SimuladorRoute: typeof SimuladorRoute
+  SobreRoute: typeof SobreRoute
+  TermosRoute: typeof TermosRoute
   ValorizacaoRoute: typeof ValorizacaoRoute
+  CorretorIdRoute: typeof CorretorIdRoute
   ImovelSlugRoute: typeof ImovelSlugRoute
 }
 
@@ -548,6 +626,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CorretoresRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/imoveis': {
       id: '/imoveis'
       path: '/imoveis'
@@ -560,6 +645,13 @@ declare module '@tanstack/react-router' {
       path: '/investir'
       fullPath: '/investir'
       preLoaderRoute: typeof InvestirRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/parceiros': {
+      id: '/parceiros'
+      path: '/parceiros'
+      fullPath: '/parceiros'
+      preLoaderRoute: typeof ParceirosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacidade': {
@@ -581,6 +673,20 @@ declare module '@tanstack/react-router' {
       path: '/simulador'
       fullPath: '/simulador'
       preLoaderRoute: typeof SimuladorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sobre': {
+      id: '/sobre'
+      path: '/sobre'
+      fullPath: '/sobre'
+      preLoaderRoute: typeof SobreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/termos': {
+      id: '/termos'
+      path: '/termos'
+      fullPath: '/termos'
+      preLoaderRoute: typeof TermosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/valorizacao': {
@@ -610,6 +716,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/painel'
       preLoaderRoute: typeof AuthenticatedPainelRouteRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/corretor/$id': {
+      id: '/corretor/$id'
+      path: '/corretor/$id'
+      fullPath: '/corretor/$id'
+      preLoaderRoute: typeof CorretorIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/imovel/$slug': {
       id: '/imovel/$slug'
@@ -644,6 +757,13 @@ declare module '@tanstack/react-router' {
       path: '/imoveis'
       fullPath: '/admin/imoveis'
       preLoaderRoute: typeof AuthenticatedAdminImoveisRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/parceiros': {
+      id: '/_authenticated/admin/parceiros'
+      path: '/parceiros'
+      fullPath: '/admin/parceiros'
+      preLoaderRoute: typeof AuthenticatedAdminParceirosRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
     '/_authenticated/admin/usuarios': {
@@ -744,6 +864,7 @@ interface AuthenticatedAdminRouteRouteChildren {
   AuthenticatedAdminBannersRoute: typeof AuthenticatedAdminBannersRoute
   AuthenticatedAdminCategoriasRoute: typeof AuthenticatedAdminCategoriasRoute
   AuthenticatedAdminImoveisRoute: typeof AuthenticatedAdminImoveisRoute
+  AuthenticatedAdminParceirosRoute: typeof AuthenticatedAdminParceirosRoute
   AuthenticatedAdminUsuariosRoute: typeof AuthenticatedAdminUsuariosRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
@@ -753,6 +874,7 @@ const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren
     AuthenticatedAdminBannersRoute: AuthenticatedAdminBannersRoute,
     AuthenticatedAdminCategoriasRoute: AuthenticatedAdminCategoriasRoute,
     AuthenticatedAdminImoveisRoute: AuthenticatedAdminImoveisRoute,
+    AuthenticatedAdminParceirosRoute: AuthenticatedAdminParceirosRoute,
     AuthenticatedAdminUsuariosRoute: AuthenticatedAdminUsuariosRoute,
     AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
   }
@@ -848,12 +970,17 @@ const rootRouteChildren: RootRouteChildren = {
   ComprarRoute: ComprarRoute,
   ContatoRoute: ContatoRoute,
   CorretoresRoute: CorretoresRoute,
+  FaqRoute: FaqRoute,
   ImoveisRoute: ImoveisRoute,
   InvestirRoute: InvestirRoute,
+  ParceirosRoute: ParceirosRoute,
   PrivacidadeRoute: PrivacidadeRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SimuladorRoute: SimuladorRoute,
+  SobreRoute: SobreRoute,
+  TermosRoute: TermosRoute,
   ValorizacaoRoute: ValorizacaoRoute,
+  CorretorIdRoute: CorretorIdRoute,
   ImovelSlugRoute: ImovelSlugRoute,
 }
 export const routeTree = rootRouteImport

@@ -147,12 +147,17 @@ export const getHomeData = createServerFn({ method: "GET" }).handler(async () =>
       invest: mapCards((invest.data ?? []) as unknown as PropertyCardData[]),
       // Demo comercial: sempre 12 corretores + depoimentos com foto Unsplash.
       brokers: MOCK_BROKERS,
-      partners: partners.data ?? [],
+      partners: partners.data?.length ? partners.data : getMockHomeData().partners,
       testimonials: getMockHomeData().testimonials,
       categories: categories.data ?? [],
     };
     if (!home.featured.length && !home.recent.length) return getMockHomeData();
-    return { ...home, brokers: MOCK_BROKERS, testimonials: getMockHomeData().testimonials };
+    return {
+      ...home,
+      brokers: MOCK_BROKERS,
+      partners: home.partners.length ? home.partners : getMockHomeData().partners,
+      testimonials: getMockHomeData().testimonials,
+    };
 
   } catch {
     return getMockHomeData();

@@ -19,8 +19,12 @@ export function SiteFooter() {
         <div>
           <h3 className="text-sm font-semibold uppercase tracking-wider text-gold">Institucional</h3>
           <ul className="mt-4 space-y-2.5 text-sm text-navy-foreground/75">
+            <li><Link to="/sobre" className="hover:text-gold">Sobre</Link></li>
+            <li><Link to="/parceiros" className="hover:text-gold">Parceiros</Link></li>
+            <li><Link to="/faq" className="hover:text-gold">FAQ</Link></li>
             <li><Link to="/contato" className="hover:text-gold">Contato</Link></li>
             <li><Link to="/privacidade" className="hover:text-gold">Privacidade e LGPD</Link></li>
+            <li><Link to="/termos" className="hover:text-gold">Termos de uso</Link></li>
             <li><Link to="/auth" className="hover:text-gold">Área do cliente</Link></li>
             <li className="flex items-center gap-2 pt-2"><Mail className="h-4 w-4 text-gold" /> Use o formulário de contato</li>
             <li className="flex items-center gap-2"><MapPin className="h-4 w-4 text-gold" /> Atendimento em todo o Brasil</li>

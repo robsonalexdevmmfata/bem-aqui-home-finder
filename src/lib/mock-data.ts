@@ -332,9 +332,19 @@ export const MOCK_BROKERS: MockBroker[] = BROKER_SEED.map((b, i) => ({
 }));
 
 export const MOCK_PARTNERS = [
-  { id: "mock-p1", name: "Banco Demo Cred", description: "Financiamento facilitado", logo_url: null, website: null, is_demo: true },
-  { id: "mock-p2", name: "SeguraLar", description: "Seguros residenciais", logo_url: null, website: null, is_demo: true },
+  { id: "mock-p1", name: "Banco Demo Cred", description: "Financiamento habitacional e análise de crédito simplificada para compradores.", logo_url: null, website: "https://agenciainfotech.com.br/", is_demo: true, position: 1, active: true },
+  { id: "mock-p2", name: "SeguraLar", description: "Seguros residenciais e proteção patrimonial para imóveis anunciados.", logo_url: null, website: "https://agenciainfotech.com.br/", is_demo: true, position: 2, active: true },
+  { id: "mock-p3", name: "DocuImóvel", description: "Digitalização de contratos, procurações e due diligence documental.", logo_url: null, website: "https://agenciainfotech.com.br/", is_demo: true, position: 3, active: true },
+  { id: "mock-p4", name: "FotoPro Estúdio", description: "Tour virtual, drone e fotografia profissional para anúncios premium.", logo_url: null, website: "https://agenciainfotech.com.br/", is_demo: true, position: 4, active: true },
+  { id: "mock-p5", name: "Reformei Express", description: "Orçamentos e reformas rápidas para valorização antes da venda.", logo_url: null, website: "https://agenciainfotech.com.br/", is_demo: true, position: 5, active: true },
+  { id: "mock-p6", name: "Mudança Fácil Log", description: "Logística de mudança e armazenamento para locatários e compradores.", logo_url: null, website: "https://agenciainfotech.com.br/", is_demo: true, position: 6, active: true },
+  { id: "mock-p7", name: "Jurídico Imob+", description: "Assessoria jurídica imobiliária e acompanhamento de escrituras.", logo_url: null, website: "https://agenciainfotech.com.br/", is_demo: true, position: 7, active: true },
+  { id: "mock-p8", name: "Clean Stay", description: "Higienização e home staging para visitas e entregas de chaves.", logo_url: null, website: "https://agenciainfotech.com.br/", is_demo: true, position: 8, active: true },
 ];
+
+export function getMockBrokerById(id: string) {
+  return MOCK_BROKERS.find((b) => b.id === id) ?? null;
+}
 
 const TESTIMONIAL_SEED = [
   { author_name: "Mariana S.", author_role: "Compradora", content: "Encontrei meu apartamento em menos de duas semanas. Plataforma clara e atendimento rápido." },

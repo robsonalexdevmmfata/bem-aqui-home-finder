@@ -148,7 +148,7 @@ export const getHomeData = createServerFn({ method: "GET" }).handler(async () =>
       // Demo comercial: sempre 12 corretores + depoimentos com foto Unsplash.
       brokers: MOCK_BROKERS,
       partners: partners.data ?? [],
-      testimonials: (testimonials.data?.length ? testimonials.data : null) ?? getMockHomeData().testimonials,
+      testimonials: getMockHomeData().testimonials,
       categories: categories.data ?? [],
     };
     if (!home.featured.length && !home.recent.length) return getMockHomeData();

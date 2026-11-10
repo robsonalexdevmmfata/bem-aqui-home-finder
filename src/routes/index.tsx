@@ -161,9 +161,10 @@ function HomePage() {
         <div className="container-page">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-gold">Depoimentos</p>
           <h2 className="mt-2 font-display text-3xl font-bold text-navy">Quem já encontrou o endereço certo</h2>
+          <p className="mt-3 max-w-2xl text-muted-foreground">12 depoimentos fictícios em slides, com fotos de perfil demonstrativas.</p>
           <div className="gold-rule mt-3" />
           <div className="mt-8 px-8 md:px-2">
-            <TestimonialCarousel items={data.testimonials?.length ? data.testimonials : MOCK_TESTIMONIALS} />
+            <TestimonialCarousel items={MOCK_TESTIMONIALS} />
           </div>
         </div>
       </section>

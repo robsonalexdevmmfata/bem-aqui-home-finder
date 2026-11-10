@@ -30,7 +30,20 @@ export function SiteFooter() {
       <div className="border-t border-navy-foreground/10">
         <div className="container-page flex flex-col gap-2 py-5 text-xs text-navy-foreground/55 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} {SITE.name}. Todos os direitos reservados.</p>
-          <p>Imóveis, corretores e depoimentos marcados como fictícios são apenas para demonstração.</p>
+          <p>
+            Desenvolvido por{" "}
+            <a
+              href="https://agenciainfotech.com.br/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-gold hover:underline"
+            >
+              Agencia Info Tech Ltda
+            </a>
+          </p>
+        </div>
+        <div className="container-page pb-5 text-[11px] text-navy-foreground/45">
+          Imóveis, corretores e depoimentos marcados como fictícios são apenas para demonstração.
         </div>
       </div>
     </footer>

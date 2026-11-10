@@ -296,62 +296,30 @@ export const MOCK_PARTNERS = [
   { id: "mock-p2", name: "SeguraLar", description: "Seguros residenciais", logo_url: null, website: null, is_demo: true },
 ];
 
-export const MOCK_TESTIMONIALS = [
-  {
-    id: "mock-t1",
-    author_name: "Mariana S.",
-    author_role: "Compradora",
-    content: "Encontrei meu apartamento em menos de duas semanas. Plataforma clara e atendimento rápido.",
-    rating: 5,
-    is_demo: true,
-    photo_url: pickMockAvatar(2),
-  },
-  {
-    id: "mock-t2",
-    author_name: "Ricardo P.",
-    author_role: "Investidor",
-    content: "Os simuladores ajudaram a fechar a análise de rentabilidade com segurança.",
-    rating: 5,
-    is_demo: true,
-    photo_url: pickMockAvatar(5),
-  },
-  {
-    id: "mock-t3",
-    author_name: "Juliana M.",
-    author_role: "Corretora",
-    content: "O painel profissional organiza leads e propostas sem complicação.",
-    rating: 5,
-    is_demo: true,
-    photo_url: pickMockAvatar(0),
-  },
-  {
-    id: "mock-t4",
-    author_name: "Felipe A.",
-    author_role: "Locatário",
-    content: "Aluguei com proposta online e acompanhamento do corretor do início ao fim.",
-    rating: 5,
-    is_demo: true,
-    photo_url: pickMockAvatar(7),
-  },
-  {
-    id: "mock-t5",
-    author_name: "Camila R.",
-    author_role: "Investidora",
-    content: "A análise de investimento mostrou o yield líquido antes de eu decidir.",
-    rating: 5,
-    is_demo: true,
-    photo_url: pickMockAvatar(10),
-  },
-  {
-    id: "mock-t6",
-    author_name: "Bruno T.",
-    author_role: "Comprador",
-    content: "Fotos, mapa e chat com o corretor no mesmo fluxo. Experiência moderna.",
-    rating: 5,
-    is_demo: true,
-    photo_url: pickMockAvatar(3),
-  },
-];
+const TESTIMONIAL_SEED = [
+  { author_name: "Mariana S.", author_role: "Compradora", content: "Encontrei meu apartamento em menos de duas semanas. Plataforma clara e atendimento rápido." },
+  { author_name: "Ricardo P.", author_role: "Investidor", content: "Os simuladores ajudaram a fechar a análise de rentabilidade com segurança." },
+  { author_name: "Juliana M.", author_role: "Corretora", content: "O painel profissional organiza leads e propostas sem complicação." },
+  { author_name: "Felipe A.", author_role: "Locatário", content: "Aluguei com proposta online e acompanhamento do corretor do início ao fim." },
+  { author_name: "Camila R.", author_role: "Investidora", content: "A análise de investimento mostrou o yield líquido antes de eu decidir." },
+  { author_name: "Bruno T.", author_role: "Comprador", content: "Fotos, mapa e chat com o corretor no mesmo fluxo. Experiência moderna." },
+  { author_name: "Aline V.", author_role: "Compradora", content: "Comparei vários imóveis e finalizei a proposta sem sair de casa." },
+  { author_name: "Eduardo N.", author_role: "Investidor", content: "A projeção de valorização deixou o cenário bem transparente." },
+  { author_name: "Sofia L.", author_role: "Locatária", content: "Atendimento ágil pelo WhatsApp e documentação organizada no painel." },
+  { author_name: "Thiago C.", author_role: "Comprador", content: "Gostei do visual da plataforma e da clareza dos filtros de busca." },
+  { author_name: "Renata G.", author_role: "Corretora", content: "Publicar imóvel e receber leads no mesmo lugar acelerou minhas vendas." },
+  { author_name: "Paulo H.", author_role: "Investidor", content: "Usei o simulador SAC/PRICE e escolhi o melhor cenário de financiamento." },
+] as const;
+
+export const MOCK_TESTIMONIALS = TESTIMONIAL_SEED.map((t, i) => ({
+  id: `mock-t${i + 1}`,
+  author_name: t.author_name,
+  author_role: t.author_role,
+  content: t.content,
+  rating: 5,
+  is_demo: true as const,
+  photo_url: pickMockAvatar(i + 1),
+}));
 
 
 export const MOCK_REPORT_ROWS = [

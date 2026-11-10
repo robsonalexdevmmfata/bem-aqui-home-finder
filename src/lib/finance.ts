@@ -82,7 +82,7 @@ export interface ValuationPoint {
   conservative: number;
   base: number;
   optimistic: number;
-  inflation?: number;
+  inflation?: number | undefined;
 }
 
 export function projectValuation(input: ValuationInput): ValuationPoint[] {

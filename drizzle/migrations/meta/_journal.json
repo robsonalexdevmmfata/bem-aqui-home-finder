@@ -8,6 +8,13 @@
       "when": 1794340483870,
       "tag": "0000_bem_aqui_core_schema",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794340618671,
+      "tag": "0001_bem_aqui_demo_seed",
+      "breakpoints": true
     }
   ]
 }

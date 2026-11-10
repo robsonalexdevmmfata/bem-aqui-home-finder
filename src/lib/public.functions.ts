@@ -145,13 +145,15 @@ export const getHomeData = createServerFn({ method: "GET" }).handler(async () =>
       sale: mapCards((sale.data ?? []) as unknown as PropertyCardData[]),
       rent: mapCards((rent.data ?? []) as unknown as PropertyCardData[]),
       invest: mapCards((invest.data ?? []) as unknown as PropertyCardData[]),
-      brokers: brokers.data ?? [],
+      // Demo comercial: sempre 12 corretores + depoimentos com foto Unsplash.
+      brokers: MOCK_BROKERS,
       partners: partners.data ?? [],
-      testimonials: testimonials.data ?? [],
+      testimonials: (testimonials.data?.length ? testimonials.data : null) ?? getMockHomeData().testimonials,
       categories: categories.data ?? [],
     };
     if (!home.featured.length && !home.recent.length) return getMockHomeData();
-    return home;
+    return { ...home, brokers: MOCK_BROKERS, testimonials: getMockHomeData().testimonials };
+
   } catch {
     return getMockHomeData();
   }
@@ -193,17 +195,6 @@ export const getPropertyBySlug = createServerFn({ method: "GET" })
   });
 
 export const listBrokers = createServerFn({ method: "GET" }).handler(async () => {
-  if (!hasSupabaseEnv()) return MOCK_BROKERS;
-  try {
-    const sb = publicClient();
-    if (!sb) return MOCK_BROKERS;
-    const { data } = await sb
-      .from("brokers")
-      .select("id, display_name, creci, bio, photo_url, city, specialties, is_demo, whatsapp, featured, agency:agencies(name)")
-      .eq("status", "approved")
-      .order("featured", { ascending: false });
-    return data?.length ? data : MOCK_BROKERS;
-  } catch {
-    return MOCK_BROKERS;
-  }
+  // Sempre a equipe demo com 12 fotos — suficiente para a proposta/freela.
+  return MOCK_BROKERS;
 });

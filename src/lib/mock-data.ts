@@ -228,34 +228,68 @@ export const MOCK_CATEGORIES = [
   { id: "mock-cat-5", name: "Terreno", slug: "terreno", position: 5, created_at: new Date().toISOString() },
 ];
 
-export const MOCK_BROKERS = [
-  {
-    id: "mock-broker-1",
-    display_name: "Ana Horizonte",
-    creci: "123456-F",
-    bio: "Especialista em imóveis de alto padrão na zona sul.",
-    photo_url: null,
-    city: "São Paulo",
-    specialties: ["Coberturas", "Jardins"],
-    is_demo: true,
-    whatsapp: null,
-    featured: true,
-    agency: { name: "Horizonte Imóveis" },
-  },
-  {
-    id: "mock-broker-2",
-    display_name: "Carlos Mendes",
-    creci: "654321-F",
-    bio: "Foco em investimentos e locação corporativa.",
-    photo_url: null,
-    city: "São Paulo",
-    specialties: ["Investimento", "Comercial"],
-    is_demo: true,
-    whatsapp: null,
-    featured: true,
-    agency: { name: "Horizonte Imóveis" },
-  },
+/** Retratos fictícios (Unsplash) para corretores e depoimentos. */
+export const MOCK_AVATARS = [
+  "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&h=400&q=80",
+  "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&h=400&q=80",
+  "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&h=400&q=80",
+  "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&h=400&q=80",
+  "https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?auto=format&fit=crop&w=400&h=400&q=80",
+  "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&h=400&q=80",
+  "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=400&h=400&q=80",
+  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&h=400&q=80",
+  "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&h=400&q=80",
+  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&h=400&q=80",
+  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&h=400&q=80",
+  "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&h=400&q=80",
 ];
+
+export function pickMockAvatar(seed = 0) {
+  return MOCK_AVATARS[Math.abs(seed) % MOCK_AVATARS.length]!;
+}
+
+type MockBroker = {
+  id: string;
+  display_name: string;
+  creci: string;
+  bio: string;
+  photo_url: string;
+  city: string;
+  specialties: string[];
+  is_demo: true;
+  whatsapp: null;
+  featured: true;
+  agency: { name: string };
+};
+
+const BROKER_SEED: Array<Omit<MockBroker, "id" | "photo_url" | "is_demo" | "whatsapp" | "featured" | "agency"> & { agency?: string }> = [
+  { display_name: "Ana Horizonte", creci: "123456-F", bio: "Especialista em imóveis de alto padrão na zona sul.", city: "São Paulo", specialties: ["Coberturas", "Jardins"] },
+  { display_name: "Carlos Mendes", creci: "654321-F", bio: "Foco em investimentos e locação corporativa.", city: "São Paulo", specialties: ["Investimento", "Comercial"] },
+  { display_name: "Beatriz Nogueira", creci: "198745-F", bio: "Atendimento consultivo para primeira moradia.", city: "Campinas", specialties: ["Apartamentos", "Família"] },
+  { display_name: "Diego Farias", creci: "221098-F", bio: "Negociações rápidas em lançamentos e plantas.", city: "São Paulo", specialties: ["Lançamentos", "Venda"] },
+  { display_name: "Helena Prado", creci: "309876-F", bio: "Especialista em imóveis de praia e temporada.", city: "Santos", specialties: ["Praia", "Locação"] },
+  { display_name: "Igor Albuquerque", creci: "412233-F", bio: "Mercado de luxo e relacionamento com investidores.", city: "São Paulo", specialties: ["Luxo", "Investimento"] },
+  { display_name: "Larissa Campos", creci: "508812-F", bio: "Ajuda famílias a encontrar o endereço certo.", city: "Guarulhos", specialties: ["Casas", "Condomínios"] },
+  { display_name: "Marcos Vieira", creci: "611204-F", bio: "Foco em salas comerciais e pontos estratégicos.", city: "São Paulo", specialties: ["Comercial", "Escritórios"] },
+  { display_name: "Natália Reis", creci: "720551-F", bio: "Experiência em valorização e análise de bairros.", city: "São Paulo", specialties: ["Valorização", "Venda"] },
+  { display_name: "Otávio Lima", creci: "833440-F", bio: "Atendimento digital e visitas virtuais.", city: "Osasco", specialties: ["Digital", "Aluguel"] },
+  { display_name: "Patrícia Souza", creci: "901122-F", bio: "Especialista em imóveis compactos e studios.", city: "São Paulo", specialties: ["Studios", "Compactos"] },
+  { display_name: "Rafael Duarte", creci: "990334-F", bio: "Fecha negócios com transparência e agilidade.", city: "São Bernardo", specialties: ["Venda", "Negociação"] },
+];
+
+export const MOCK_BROKERS: MockBroker[] = BROKER_SEED.map((b, i) => ({
+  id: `mock-broker-${i + 1}`,
+  display_name: b.display_name,
+  creci: b.creci,
+  bio: b.bio,
+  photo_url: pickMockAvatar(i),
+  city: b.city,
+  specialties: b.specialties,
+  is_demo: true,
+  whatsapp: null,
+  featured: true,
+  agency: { name: "BEM AQUI Parceiros" },
+}));
 
 export const MOCK_PARTNERS = [
   { id: "mock-p1", name: "Banco Demo Cred", description: "Financiamento facilitado", logo_url: null, website: null, is_demo: true },
@@ -270,6 +304,7 @@ export const MOCK_TESTIMONIALS = [
     content: "Encontrei meu apartamento em menos de duas semanas. Plataforma clara e atendimento rápido.",
     rating: 5,
     is_demo: true,
+    photo_url: pickMockAvatar(2),
   },
   {
     id: "mock-t2",
@@ -278,6 +313,7 @@ export const MOCK_TESTIMONIALS = [
     content: "Os simuladores ajudaram a fechar a análise de rentabilidade com segurança.",
     rating: 5,
     is_demo: true,
+    photo_url: pickMockAvatar(5),
   },
   {
     id: "mock-t3",
@@ -286,8 +322,37 @@ export const MOCK_TESTIMONIALS = [
     content: "O painel profissional organiza leads e propostas sem complicação.",
     rating: 5,
     is_demo: true,
+    photo_url: pickMockAvatar(0),
+  },
+  {
+    id: "mock-t4",
+    author_name: "Felipe A.",
+    author_role: "Locatário",
+    content: "Aluguei com proposta online e acompanhamento do corretor do início ao fim.",
+    rating: 5,
+    is_demo: true,
+    photo_url: pickMockAvatar(7),
+  },
+  {
+    id: "mock-t5",
+    author_name: "Camila R.",
+    author_role: "Investidora",
+    content: "A análise de investimento mostrou o yield líquido antes de eu decidir.",
+    rating: 5,
+    is_demo: true,
+    photo_url: pickMockAvatar(10),
+  },
+  {
+    id: "mock-t6",
+    author_name: "Bruno T.",
+    author_role: "Comprador",
+    content: "Fotos, mapa e chat com o corretor no mesmo fluxo. Experiência moderna.",
+    rating: 5,
+    is_demo: true,
+    photo_url: pickMockAvatar(3),
   },
 ];
+
 
 export const MOCK_REPORT_ROWS = [
   { label: "Visualizações (30 dias)", value: 1284 },

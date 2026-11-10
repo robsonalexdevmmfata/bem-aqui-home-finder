@@ -11,8 +11,10 @@ import {
 import { SiteShell } from "@/components/site/SiteShell";
 import { PropertyCard } from "@/components/site/PropertyCard";
 import { PropertySearch } from "@/components/site/PropertySearch";
+import { BrokerCarousel, TestimonialCarousel } from "@/components/site/BrokerCarousel";
 import { Button } from "@/components/ui/button";
 import { getHomeData } from "@/lib/public.functions";
+import { MOCK_BROKERS, MOCK_TESTIMONIALS } from "@/lib/mock-data";
 import { SITE } from "@/lib/config";
 
 export const Route = createFileRoute("/")({
@@ -144,42 +146,27 @@ function HomePage() {
         </div>
       </section>
 
-      {data.brokers.length > 0 && (
-        <Section eyebrow="Equipe" title="Corretores em destaque" action={<Button asChild variant="outline"><Link to="/corretores">Ver corretores</Link></Button>}>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {data.brokers.map((b) => (
-              <div key={b.id} className="rounded-2xl border bg-card p-5 shadow-soft">
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-navy text-lg font-bold text-gold">
-                  {(b.display_name ?? "?").slice(0, 1)}
-                </div>
-                <p className="mt-4 font-semibold text-foreground">{b.display_name}</p>
-                <p className="text-xs text-muted-foreground">CRECI {b.creci ?? "—"}{b.city ? ` · ${b.city}` : ""}</p>
-                {b.bio && <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">{b.bio}</p>}
-              </div>
-            ))}
-          </div>
-        </Section>
-      )}
+      <Section
+        eyebrow="Equipe"
+        title="Corretores em destaque"
+        subtitle="12 profissionais em slides — fotos e dados fictícios para demonstração."
+        action={<Button asChild variant="outline"><Link to="/corretores">Ver corretores</Link></Button>}
+      >
+        <div className="px-8 md:px-2">
+          <BrokerCarousel brokers={MOCK_BROKERS} />
+        </div>
+      </Section>
 
-      {data.testimonials.length > 0 && (
-        <section className="bg-surface py-14">
-          <div className="container-page">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-gold">Depoimentos</p>
-            <h2 className="mt-2 font-display text-3xl font-bold text-navy">Quem já encontrou o endereço certo</h2>
-            <div className="mt-8 grid gap-4 md:grid-cols-3">
-              {data.testimonials.map((t) => (
-                <blockquote key={t.id} className="rounded-2xl border bg-card p-6 shadow-soft">
-                  <p className="text-sm text-foreground/90">“{t.content}”</p>
-                  <footer className="mt-4">
-                    <p className="font-semibold text-navy">{t.author_name}</p>
-                    {t.author_role && <p className="text-xs text-muted-foreground">{t.author_role}</p>}
-                  </footer>
-                </blockquote>
-              ))}
-            </div>
+      <section className="bg-surface py-14">
+        <div className="container-page">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-gold">Depoimentos</p>
+          <h2 className="mt-2 font-display text-3xl font-bold text-navy">Quem já encontrou o endereço certo</h2>
+          <div className="gold-rule mt-3" />
+          <div className="mt-8 px-8 md:px-2">
+            <TestimonialCarousel items={data.testimonials?.length ? data.testimonials : MOCK_TESTIMONIALS} />
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
       <section className="bg-gold py-10">
         <div className="container-page flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">

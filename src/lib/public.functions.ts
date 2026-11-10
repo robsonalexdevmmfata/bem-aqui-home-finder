@@ -10,6 +10,11 @@ import {
   MOCK_BROKERS,
   MOCK_CATEGORIES,
 } from "@/lib/mock-data";
+import { withResolvedImages } from "@/lib/property-images";
+
+function mapCards(rows: PropertyCardData[]) {
+  return rows.map((p, i) => withResolvedImages(p, i));
+}
 
 function publicClient() {
   const { url, key } = getSupabasePublicEnv();
@@ -106,7 +111,11 @@ export const listProperties = createServerFn({ method: "GET" })
       q = q.range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
       const { data: rows, count, error } = await q;
       if (error) return filterMockProperties(data);
-      return { items: (rows ?? []) as unknown as PropertyCardData[], total: count ?? 0, pageSize: PAGE_SIZE };
+      return {
+        items: mapCards((rows ?? []) as unknown as PropertyCardData[]),
+        total: count ?? 0,
+        pageSize: PAGE_SIZE,
+      };
     } catch {
       return filterMockProperties(data);
     }
@@ -131,11 +140,11 @@ export const getHomeData = createServerFn({ method: "GET" }).handler(async () =>
       sb.from("property_categories").select("id, name, slug").order("position"),
     ]);
     const home = {
-      featured: (featured.data ?? []) as unknown as PropertyCardData[],
-      recent: (recent.data ?? []) as unknown as PropertyCardData[],
-      sale: (sale.data ?? []) as unknown as PropertyCardData[],
-      rent: (rent.data ?? []) as unknown as PropertyCardData[],
-      invest: (invest.data ?? []) as unknown as PropertyCardData[],
+      featured: mapCards((featured.data ?? []) as unknown as PropertyCardData[]),
+      recent: mapCards((recent.data ?? []) as unknown as PropertyCardData[]),
+      sale: mapCards((sale.data ?? []) as unknown as PropertyCardData[]),
+      rent: mapCards((rent.data ?? []) as unknown as PropertyCardData[]),
+      invest: mapCards((invest.data ?? []) as unknown as PropertyCardData[]),
       brokers: brokers.data ?? [],
       partners: partners.data ?? [],
       testimonials: testimonials.data ?? [],
@@ -177,7 +186,7 @@ export const getPropertyBySlug = createServerFn({ method: "GET" })
         .eq("status", "published")
         .maybeSingle();
       if (error || !p) return getMockPropertyBySlug(data.slug);
-      return p;
+      return withResolvedImages(p as { id: string; images?: { url: string; position: number }[] });
     } catch {
       return getMockPropertyBySlug(data.slug);
     }

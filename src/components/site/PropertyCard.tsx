@@ -1,18 +1,23 @@
+import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Bath, BedDouble, Car, Maximize2, MapPin } from "lucide-react";
 import type { PropertyCardData } from "@/lib/public.functions";
 import { priceLabel, PURPOSE_LABEL } from "@/lib/format";
+import { resolvePropertyImageUrl } from "@/lib/property-images";
+import { pickMockPhoto } from "@/lib/mock-data";
 import { DemoBadge } from "./StatusBadge";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 function coverUrl(p: PropertyCardData) {
   const imgs = [...(p.images ?? [])].sort((a, b) => a.position - b.position);
-  return imgs[0]?.url ?? null;
+  const raw = imgs[0]?.url ?? null;
+  return resolvePropertyImageUrl(raw, p.id.length);
 }
 
 export function PropertyCard({ property, className }: { property: PropertyCardData; className?: string }) {
-  const img = coverUrl(property);
+  const initial = coverUrl(property);
+  const [src, setSrc] = useState(initial);
   const place = [property.neighborhood, property.city].filter(Boolean).join(", ");
 
   return (
@@ -25,16 +30,13 @@ export function PropertyCard({ property, className }: { property: PropertyCardDa
       )}
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-        {img ? (
-          <img
-            src={img}
-            alt={property.title}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-            loading="lazy"
-          />
-        ) : (
-          <div className="flex h-full items-center justify-center text-sm text-muted-foreground">Sem foto</div>
-        )}
+        <img
+          src={src}
+          alt={property.title}
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+          onError={() => setSrc(pickMockPhoto(property.id.length + 3))}
+        />
         <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
           <Badge variant="gold">{PURPOSE_LABEL[property.purpose] ?? property.purpose}</Badge>
           {property.featured && <Badge className="border-transparent bg-navy text-navy-foreground">Destaque</Badge>}

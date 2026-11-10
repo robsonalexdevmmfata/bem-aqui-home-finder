@@ -14,6 +14,8 @@ import { formatBRL, priceLabel, PURPOSE_LABEL } from "@/lib/format";
 import { integrations, SITE, whatsappLink } from "@/lib/config";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
+import { resolvePropertyImageUrl } from "@/lib/property-images";
+import { pickMockPhoto } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/imovel/$slug")({
   loader: async ({ params }) => {
@@ -33,12 +35,18 @@ export const Route = createFileRoute("/imovel/$slug")({
 function PropertyDetailPage() {
   const p = Route.useLoaderData();
   const { user } = useAuth();
-  const images = useMemo(() => [...(p.images ?? [])].sort((a, b) => a.position - b.position), [p.images]);
+  const images = useMemo(
+    () =>
+      [...(p.images ?? [])]
+        .sort((a, b) => a.position - b.position)
+        .map((img, i) => ({ ...img, url: resolvePropertyImageUrl(img.url, (p.id?.length ?? 0) + i) })),
+    [p.images, p.id],
+  );
   const [active, setActive] = useState(0);
   const [lead, setLead] = useState({ name: "", email: "", phone: "", message: "Tenho interesse neste imóvel." });
   const [sending, setSending] = useState(false);
 
-  const cover = images[active]?.url ?? images[0]?.url;
+  const cover = images[active]?.url ?? images[0]?.url ?? pickMockPhoto(1);
   const place = [p.neighborhood, p.city, p.state].filter(Boolean).join(", ");
   const broker = p.broker as {
     display_name?: string;

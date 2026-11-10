@@ -28,3 +28,10 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+- Public pages read data through server functions in `src/lib/public.functions.ts` (publishable client, published rows only) so they render server-side for SEO.
+- Signed-in areas (`/conta`, `/painel`, `/admin`) live under `src/routes/_authenticated/` and query with the browser client; access is enforced by database policies and triggers, not by the UI.
+- Business rules for publishing, proposals and account status live in database triggers so every client gets the same enforcement.
+- Integration credentials (WhatsApp, Google Maps, Analytics) come from `VITE_*` env vars in `src/lib/config.ts`; features degrade gracefully when unset.
+- Financial math lives in `src/lib/finance.ts` as pure functions with tests.

@@ -3,10 +3,14 @@ import { MOCK_PROPERTY_PHOTOS, pickMockPhoto } from "@/lib/mock-data";
 /** URLs do seed Lovable (`/__l5e/...`) e caminhos relativos não carregam no Vercel. */
 export function isBrokenPropertyImageUrl(url: string | null | undefined) {
   if (!url) return true;
-  if (url.startsWith("/__l5e/")) return true;
-  if (url.includes("/__l5e/assets")) return true;
-  if (url.startsWith("/") && !url.startsWith("//")) return true;
-  if (url.includes("placeholder.supabase")) return true;
+  const u = url.trim();
+  if (!u) return true;
+  if (u.startsWith("/__l5e/") || u.includes("/__l5e/")) return true;
+  if (u.startsWith("/") && !u.startsWith("//")) return true;
+  if (u.includes("placeholder.supabase")) return true;
+  if (u.includes("demo-casa") || u.includes("demo-apto") || u.includes("demo-cobertura")) return true;
+  // Fora do Unsplash no pitch demo costuma ser asset inexistente.
+  if (!u.includes("images.unsplash.com") && !u.includes("supabase.co/storage")) return true;
   return false;
 }
 

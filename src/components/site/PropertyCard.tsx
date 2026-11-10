@@ -18,6 +18,7 @@ function coverUrl(p: PropertyCardData) {
 export function PropertyCard({ property, className }: { property: PropertyCardData; className?: string }) {
   const initial = coverUrl(property);
   const [src, setSrc] = useState(initial);
+  const [failCount, setFailCount] = useState(0);
   const place = [property.neighborhood, property.city].filter(Boolean).join(", ");
 
   return (
@@ -35,7 +36,11 @@ export function PropertyCard({ property, className }: { property: PropertyCardDa
           alt={property.title}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
-          onError={() => setSrc(pickMockPhoto(property.id.length + 3))}
+          onError={() => {
+            const next = failCount + 1;
+            setFailCount(next);
+            setSrc(pickMockPhoto(property.id.length + next * 5 + 7));
+          }}
         />
         <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
           <Badge variant="gold">{PURPOSE_LABEL[property.purpose] ?? property.purpose}</Badge>

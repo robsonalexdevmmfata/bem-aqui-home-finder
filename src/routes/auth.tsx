@@ -9,8 +9,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { supabase } from "@/integrations/supabase/client";
-import { fetchMyRoles } from "@/hooks/use-auth";
+import { useAuth, fetchMyRoles } from "@/hooks/use-auth";
+import { hasSupabaseEnv } from "@/lib/env";
+import { getMockSession, mockResolveHome, mockSignIn } from "@/lib/mock-auth";
 import { SITE } from "@/lib/config";
 
 const searchSchema = z.object({
@@ -22,21 +23,30 @@ export const Route = createFileRoute("/auth")({
   validateSearch: searchSchema,
   ssr: false,
   beforeLoad: async ({ search }) => {
-    const { data } = await supabase.auth.getUser();
-    if (data.user) {
-      throw redirect({ to: await resolveHome(search.redirect) });
+    if (!hasSupabaseEnv()) {
+      const mock = getMockSession();
+      if (mock) throw redirect({ to: await resolveHome(search.redirect, mock.roles) });
+      return;
+    }
+    try {
+      const { supabase } = await import("@/integrations/supabase/client");
+      const { data } = await supabase.auth.getUser();
+      if (data.user) throw redirect({ to: await resolveHome(search.redirect) });
+    } catch (err) {
+      if (err && typeof err === "object" && "to" in err) throw err;
+      const mock = getMockSession();
+      if (mock) throw redirect({ to: await resolveHome(search.redirect, mock.roles) });
     }
   },
   head: () => ({ meta: [{ title: `Entrar — ${SITE.name}` }] }),
   component: AuthPage,
 });
 
-async function resolveHome(redirectTo?: string) {
+async function resolveHome(redirectTo?: string, rolesOverride?: string[]) {
   if (redirectTo && redirectTo.startsWith("/") && !redirectTo.startsWith("//")) return redirectTo as "/";
+  if (rolesOverride) return mockResolveHome(rolesOverride);
   const { roles } = await fetchMyRoles();
-  if (roles.includes("admin")) return "/admin" as const;
-  if (roles.some((r) => r === "broker" || r === "agency")) return "/painel" as const;
-  return "/conta" as const;
+  return mockResolveHome(roles);
 }
 
 const DEMOS = [
@@ -47,6 +57,7 @@ const DEMOS = [
 
 function AuthPage() {
   const { redirect: redirectTo, mode } = Route.useSearch();
+  const { mockMode, refreshMockSession } = useAuth();
   const navigate = useNavigate();
   const [tab, setTab] = useState(mode ?? "login");
   const [loading, setLoading] = useState(false);
@@ -65,22 +76,43 @@ function AuthPage() {
 
   const [forgotEmail, setForgotEmail] = useState("");
 
-  const afterLogin = async () => {
-    const to = await resolveHome(redirectTo);
-    toast.success("Login realizado");
+  const afterLogin = async (roles?: string[]) => {
+    const to = await resolveHome(redirectTo, roles);
+    toast.success(mockMode ? "Login demo realizado" : "Login realizado");
     await navigate({ to });
   };
 
   const onLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email: loginEmail.trim(), password: loginPassword });
-    setLoading(false);
-    if (error) {
-      toast.error(error.message || "Não foi possível entrar");
-      return;
+    try {
+      if (mockMode || !hasSupabaseEnv()) {
+        const session = mockSignIn(loginEmail, loginPassword);
+        refreshMockSession();
+        setLoading(false);
+        await afterLogin(session.roles);
+        return;
+      }
+      const { supabase } = await import("@/integrations/supabase/client");
+      const { error } = await supabase.auth.signInWithPassword({ email: loginEmail.trim(), password: loginPassword });
+      setLoading(false);
+      if (error) {
+        // Fallback demo se Supabase rejeitar / estiver offline
+        try {
+          const session = mockSignIn(loginEmail, loginPassword);
+          refreshMockSession();
+          await afterLogin(session.roles);
+          return;
+        } catch {
+          toast.error(error.message || "Não foi possível entrar");
+          return;
+        }
+      }
+      await afterLogin();
+    } catch (err) {
+      setLoading(false);
+      toast.error(err instanceof Error ? err.message : "Não foi possível entrar");
     }
-    await afterLogin();
   };
 
   const fillDemo = (email: string) => {
@@ -95,41 +127,62 @@ function AuthPage() {
       toast.error("É necessário aceitar a política de privacidade (LGPD).");
       return;
     }
-    setLoading(true);
-    const { error } = await supabase.auth.signUp({
-      email: signupEmail.trim(),
-      password: signupPassword,
-      options: {
-        data: {
-          full_name: fullName.trim(),
-          phone: phone.trim(),
-          account_type: accountType,
-          lgpd_consent: "true",
-          creci: accountType === "broker" ? creci.trim() : undefined,
-        },
-      },
-    });
-    setLoading(false);
-    if (error) {
-      toast.error(error.message || "Não foi possível criar a conta");
+    if (mockMode || !hasSupabaseEnv()) {
+      toast.message("No modo demo, use as contas prontas ao lado (senha 123456).");
+      setTab("login");
       return;
     }
-    toast.success(accountType === "broker" ? "Conta criada. Aguarde aprovação para publicar imóveis." : "Conta criada com sucesso");
-    await afterLogin();
+    setLoading(true);
+    try {
+      const { supabase } = await import("@/integrations/supabase/client");
+      const { error } = await supabase.auth.signUp({
+        email: signupEmail.trim(),
+        password: signupPassword,
+        options: {
+          data: {
+            full_name: fullName.trim(),
+            phone: phone.trim(),
+            account_type: accountType,
+            lgpd_consent: "true",
+            creci: accountType === "broker" ? creci.trim() : undefined,
+          },
+        },
+      });
+      setLoading(false);
+      if (error) {
+        toast.error(error.message || "Não foi possível criar a conta");
+        return;
+      }
+      toast.success(accountType === "broker" ? "Conta criada. Aguarde aprovação para publicar imóveis." : "Conta criada com sucesso");
+      await afterLogin();
+    } catch (err) {
+      setLoading(false);
+      toast.error(err instanceof Error ? err.message : "Não foi possível criar a conta");
+    }
   };
 
   const onForgot = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    const { error } = await supabase.auth.resetPasswordForEmail(forgotEmail.trim(), {
-      redirectTo: `${window.location.origin}/reset-password`,
-    });
-    setLoading(false);
-    if (error) {
-      toast.error(error.message || "Não foi possível enviar o e-mail");
+    if (mockMode || !hasSupabaseEnv()) {
+      toast.message("No modo demo a senha das contas é sempre 123456.");
       return;
     }
-    toast.success("Se o e-mail existir, enviamos o link de redefinição.");
+    setLoading(true);
+    try {
+      const { supabase } = await import("@/integrations/supabase/client");
+      const { error } = await supabase.auth.resetPasswordForEmail(forgotEmail.trim(), {
+        redirectTo: `${window.location.origin}/reset-password`,
+      });
+      setLoading(false);
+      if (error) {
+        toast.error(error.message || "Não foi possível enviar o e-mail");
+        return;
+      }
+      toast.success("Se o e-mail existir, enviamos o link de redefinição.");
+    } catch (err) {
+      setLoading(false);
+      toast.error(err instanceof Error ? err.message : "Não foi possível enviar o e-mail");
+    }
   };
 
   return (
@@ -257,7 +310,10 @@ function AuthPage() {
               <Building2 className="h-5 w-5" />
               <p className="text-xs font-semibold uppercase tracking-[0.2em]">Contas demo</p>
             </div>
-            <p className="mt-3 text-sm text-navy-foreground/75">Senha de todas: <strong className="text-gold">123456</strong></p>
+            <p className="mt-3 text-sm text-navy-foreground/75">
+              {mockMode ? "Modo demo (sem Supabase). " : ""}
+              Senha de todas: <strong className="text-gold">123456</strong>
+            </p>
             <div className="mt-4 space-y-2">
               {DEMOS.map((d) => (
                 <button

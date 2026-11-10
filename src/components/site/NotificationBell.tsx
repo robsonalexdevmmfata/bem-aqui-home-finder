@@ -2,36 +2,48 @@ import { useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Bell } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { formatDateTime } from "@/lib/format";
 import { cn } from "@/lib/utils";
+import { hasSupabaseEnv } from "@/lib/env";
 
 export function NotificationBell({ userId, light }: { userId: string; light?: boolean }) {
   const qc = useQueryClient();
+  const live = hasSupabaseEnv();
   const { data = [] } = useQuery({
-    queryKey: ["notifications", userId],
+    queryKey: ["notifications", userId, live],
+    enabled: live,
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data } = await supabase.from("notifications").select("*").eq("user_id", userId).order("created_at", { ascending: false }).limit(15);
       return data ?? [];
     },
   });
 
   useEffect(() => {
-    const channel = supabase
-      .channel(`notif-${userId}-${Math.random().toString(36).slice(2)}`)
-      .on("postgres_changes", { event: "INSERT", schema: "public", table: "notifications", filter: `user_id=eq.${userId}` }, () => {
-        qc.invalidateQueries({ queryKey: ["notifications", userId] });
-      })
-      .subscribe();
+    if (!live) return;
+    let channel: { unsubscribe?: () => void } | undefined;
+    let client: Awaited<typeof import("@/integrations/supabase/client")>["supabase"] | undefined;
+    void (async () => {
+      const mod = await import("@/integrations/supabase/client");
+      client = mod.supabase;
+      channel = client
+        .channel(`notif-${userId}-${Math.random().toString(36).slice(2)}`)
+        .on("postgres_changes", { event: "INSERT", schema: "public", table: "notifications", filter: `user_id=eq.${userId}` }, () => {
+          qc.invalidateQueries({ queryKey: ["notifications", userId] });
+        })
+        .subscribe();
+    })();
     return () => {
-      supabase.removeChannel(channel);
+      if (client && channel) client.removeChannel(channel as never);
     };
-  }, [userId, qc]);
+  }, [userId, qc, live]);
 
   const unread = data.filter((n) => !n.read_at).length;
   const markAll = async () => {
+    if (!live) return;
+    const { supabase } = await import("@/integrations/supabase/client");
     await supabase.from("notifications").update({ read_at: new Date().toISOString() }).eq("user_id", userId).is("read_at", null);
     qc.invalidateQueries({ queryKey: ["notifications", userId] });
   };
@@ -64,10 +76,10 @@ export function NotificationBell({ userId, light }: { userId: string; light?: bo
               key={n.id}
               to={(n.link ?? "/conta") as "/conta"}
               onClick={async () => {
-                if (!n.read_at) {
-                  await supabase.from("notifications").update({ read_at: new Date().toISOString() }).eq("id", n.id);
-                  qc.invalidateQueries({ queryKey: ["notifications", userId] });
-                }
+                if (!live || n.read_at) return;
+                const { supabase } = await import("@/integrations/supabase/client");
+                await supabase.from("notifications").update({ read_at: new Date().toISOString() }).eq("id", n.id);
+                qc.invalidateQueries({ queryKey: ["notifications", userId] });
               }}
               className={cn("block border-b px-4 py-3 text-sm last:border-0 hover:bg-muted", !n.read_at && "bg-accent/40")}
             >
